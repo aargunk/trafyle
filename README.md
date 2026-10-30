@@ -66,7 +66,8 @@ vermediği için hazır kurulum dosyalarında yer almazlar (bkz. `assets/LISANSL
 ## Yeni sürüm yayınlama
 
 1. `app.py` içindeki `APP_VERSION`'ı artırın ve `CHANGELOG.md`'ye not ekleyin.
-2. GitHub'da **Releases › Draft a new release**, etiket olarak `v` + sürüm numarası (ör. `v3.4.1`) yazın, **Publish**.
+2. `.github/release-notes.md` dosyasını güncelleyin, sonra etiket gönderin: `git tag v3.4.1 && git push origin v3.4.1`
+   (ya da GitHub'da **Releases › Draft a new release** › etiket `v3.4.1` › **Publish**).
 3. [`.github/workflows/release.yml`](.github/workflows/release.yml) Mac ve Windows kurulum dosyalarını üretip
    birkaç dakika içinde sürüme ekler. Uygulamalar yeni sürümü kendiliğinden bildirir.
 

@@ -1,14 +1,17 @@
 # Trafyle kurulum dosyalarını GitHub'ın Mac ve Windows makinelerinde üretir.
 #
-# Yeni sürüm yayınlamak:  app.py içindeki APP_VERSION'ı artırın (ör. 3.4.1), değişikliği gönderin,
-# sonra GitHub'da Releases › "Draft a new release" › yeni etiket "v3.4.1" › Publish.
-# (Ya da:  git tag v3.4.1 && git push origin v3.4.1)
+# Yeni sürüm yayınlamak:  app.py içindeki APP_VERSION'ı artırın (ör. 3.4.1), değişikliği gönderin, sonra
+#   - ya etiket gönderin:  git tag v3.4.1 && git push origin v3.4.1   (sürüm sayfası kendiliğinden oluşturulur;
+#     notlar .github/release-notes.md dosyasından alınır)
+#   - ya da GitHub'da Releases › "Draft a new release" › yeni etiket "v3.4.1" › Publish.
 # Birkaç dakika sonra Trafyle-Kurulum.exe ve Trafyle-mac.zip sürüm sayfasına eklenir.
 #
 # Denemek için: Actions › "Trafyle sürümü" › Run workflow (dosyalar yalnızca Artifacts'e konur).
 name: Trafyle sürümü
 on:
   workflow_dispatch:
+  push:
+    tags: ["v*"]
   release:
     types: [published]
 
@@ -27,11 +30,11 @@ jobs:
         with:
           python-version: "3.12"
       - name: Sürüm numarası etiketle uyuşuyor mu?
-        if: github.event_name == 'release'
+        if: github.event_name != 'workflow_dispatch'
         shell: pwsh
         run: |
           $v = (Select-String -Path app.py -Pattern 'APP_VERSION = "([^"]+)"').Matches[0].Groups[1].Value
-          $t = "${{ github.event.release.tag_name }}".TrimStart('v','V')
+          $t = "${{ github.event.release.tag_name || github.ref_name }}".TrimStart('v','V')
           if ($v -ne $t) { Write-Error "app.py APP_VERSION ($v) ile etiket ($t) farklı. Önce APP_VERSION'ı güncelleyin."; exit 1 }
       - name: Kütüphaneler
         shell: pwsh
@@ -75,15 +78,22 @@ jobs:
           path: dist/Trafyle-mac.zip
 
   yayinla:
-    if: github.event_name == 'release'
+    if: github.event_name != 'workflow_dispatch'
     needs: [windows, macos]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           path: dosyalar
           merge-multiple: true
-      - name: Dosyaları sürüme ekle
+      - name: Sürümü oluştur ve dosyaları ekle
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.event.release.tag_name }}" dosyalar/* --clobber --repo "${{ github.repository }}"
+          TAG: ${{ github.event.release.tag_name || github.ref_name }}
+        run: |
+          if ! gh release view "$TAG" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            gh release create "$TAG" --repo "${{ github.repository }}" --title "Trafyle ${TAG#v}" \
+              --notes-file .github/release-notes.md --verify-tag
+          fi
+          gh release upload "$TAG" dosyalar/* --clobber --repo "${{ github.repository }}"
