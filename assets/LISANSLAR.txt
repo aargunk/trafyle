@@ -1,0 +1,74 @@
+Trafyle — Lisans ve üçüncü taraf bileşenler
+============================================
+
+Trafyle açık kaynaklı ve ücretsizdir: GNU Genel Kamu Lisansı sürüm 3 (GPL-3.0) ile dağıtılır.
+Kaynak kodu: https://github.com/aargunk/trafyle   ·   Copyright (C) 2026 Argun Karacabey
+Program HİÇBİR GARANTİ OLMAKSIZIN sunulur.
+
+
+Trafyle aşağıdaki açık kaynak bileşenleri kullanır. Her bileşen kendi lisansına tabidir;
+lisans metinlerinin tamamı ilgili projelerin sayfalarında yer alır.
+
+Konuşma tanıma
+  faster-whisper ........ MIT            https://github.com/SYSTRAN/faster-whisper
+  CTranslate2 ........... MIT            https://github.com/OpenNMT/CTranslate2
+  Whisper modelleri ..... MIT            https://github.com/openai/whisper
+  Model dosyaları (CTranslate2 biçimi) .. MIT   https://huggingface.co/Systran
+
+Konuşmacı ayırma
+  sherpa-onnx ........... Apache-2.0     https://github.com/k2-fsa/sherpa-onnx
+  ONNX Runtime .......... MIT            https://github.com/microsoft/onnxruntime
+  pyannote segmentation-3.0 modeli ..... MIT        https://huggingface.co/pyannote/segmentation-3.0
+  NVIDIA NeMo TitaNet-Small modeli ..... CC BY 4.0  https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/titanet_small
+    (Atıf: NVIDIA Corporation. Model değiştirilmeden ONNX biçiminde kullanılır.)
+
+Ses ve video
+  PyAV .................. BSD-3-Clause   https://github.com/PyAV-Org/PyAV
+  FFmpeg ................ LGPL-2.1+ / LGPL-3.0   https://ffmpeg.org
+  sounddevice ........... MIT            https://github.com/spatialaudio/python-sounddevice
+  PortAudio ............. MIT            https://www.portaudio.com
+  numpy ................. BSD-3-Clause   https://numpy.org
+
+Belgeler ve görüntüler
+  pdfminer.six .......... MIT            https://github.com/pdfminer/pdfminer.six
+  python-docx ........... MIT            https://github.com/python-openxml/python-docx
+  fpdf2 ................. LGPL-3.0       https://github.com/py-pdf/fpdf2
+    (fpdf2 ayrı bir Python modülü olarak bulunur ve kullanıcı tarafından değiştirilebilir.)
+  Pillow ................ MIT-CMU (HPND) https://python-pillow.org          (Windows)
+  pillow-heif / libheif . BSD-3-Clause / LGPL-3.0   https://github.com/bigcat88/pillow_heif   (Windows)
+  pypdfium2 / PDFium .... Apache-2.0 / BSD-3-Clause https://github.com/pypdfium2-team/pypdfium2 (Windows)
+  PyObjC ................ MIT            https://github.com/ronaldoussoren/pyobjc       (macOS)
+  pywinrt ............... MIT            https://github.com/pywinrt/pywinrt              (Windows)
+
+Bağlantıdan ses alma
+  yt-dlp ................ Unlicense      https://github.com/yt-dlp/yt-dlp
+  yt-dlp-ejs ............ Unlicense / MIT / ISC   https://github.com/yt-dlp/ejs
+  Deno .................. MIT            https://deno.com
+  requests, urllib3, websockets, brotli, pycryptodomex, certifi (MPL-2.0)
+
+Özetleme (isteğe bağlı, kullanıcının kendi API anahtarıyla)
+  keyring ............... MIT            https://github.com/jaraco/keyring
+  pywin32-ctypes ........ BSD-3-Clause   https://github.com/enthought/pywin32-ctypes   (Windows)
+  Özetleme sırasında metin, kullanıcının seçtiği hizmete (Anthropic, OpenAI ya da Google) gönderilir;
+  bu hizmetlerin kullanım ve veri koşulları geçerlidir. Trafyle başka hiçbir işlemde metin göndermez.
+
+Arayüz
+  Python ve Tkinter ..... PSF License    https://www.python.org
+  Tcl/Tk ................ BSD tarzı (Tcl/Tk License)
+  tkinterdnd2 / tkdnd ... MIT / BSD      https://github.com/Eliav2/tkinterdnd2
+  Inter yazı tipi (logo) . SIL OFL 1.1   https://rsms.me/inter
+
+İşletim sistemi bileşenleri
+  macOS'ta metin tanıma (Vision) ve sistem sesleri (ör. Yelda), Windows'ta metin tanıma
+  (Windows.Media.Ocr) ve sistem sesleri (ör. Tolga) işletim sisteminin kendi bileşenleridir ve
+  Trafyle ile birlikte dağıtılmaz. Sistem seslerinin kullanım koşulları Apple ve Microsoft'un
+  lisans sözleşmelerine tabidir.
+
+Bağlantıdan ses alma özelliğini yalnızca kullanma hakkınız olan içerikler için kullanın.
+İndirdiğiniz içeriğin telif hakkı ve sitenin kullanım koşulları sizin sorumluluğunuzdadır.
+
+Yalnızca kaynak koddan yapılan kişisel kurulumda
+  Piper sesleri Fahrettin ve Fettah (espeak-ng, GPL-3.0 ile çalışır): Türkçe veri seti CC0, ancak İngilizce
+  "lessac" sesinden türetilerek eğitilmiştir; lessac verisinin lisansı yalnızca araştırma amaçlı kullanıma izin verir,
+  dağıtıma izin vermez. Bu yüzden sesler Trafyle ile dağıtılmaz ve hazır kurulum dosyalarında görünmez;
+  kaynak koddan kurulumda ilk kullanımda kullanıcı tarafından indirilir.

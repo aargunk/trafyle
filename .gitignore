@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Paketleme çıktıları
+build/
+dist/
+build-out/
+*.spec
+
+# Sistem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Yerel kayıt / test dosyaları
+*.log

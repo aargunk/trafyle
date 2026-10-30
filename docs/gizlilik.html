@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gizlilik — Trafyle</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="img/logo-180.png" alt=""><b>Tra<span>fyle</span></b></a>
+    <nav><a href="./">Ana sayfa</a><a href="https://github.com/aargunk/trafyle">GitHub</a></nav>
+  </div>
+</header>
+<main class="doc">
+<h1>Gizlilik notu</h1>
+<p class="date">Son güncelleme: 30 Ekim 2026</p>
+
+<p>Trafyle bilgisayarınızda çalışan bir masaüstü uygulamasıdır. Hesap açmanızı istemez; reklam, kullanım takibi
+ya da analiz aracı içermez. Geliştiricisi olarak sizinle ilgili hiçbir veri toplamıyor, saklamıyor ya da işlemiyoruz.</p>
+
+<h2>Bilgisayarınızda kalanlar</h2>
+<p>Yazıya dökme, konuşmacı ayırma, mikrofondan kayıt, seslendirme, metin tanıma (OCR) ve dosya dönüştürme işlemleri
+tamamen bilgisayarınızda yapılır. Dosyalarınız, kayıtlarınız ve metinleriniz hiçbir sunucuya gönderilmez.
+Ayarlarınız bilgisayarınızda (Mac'te <code>~/Library/Application Support/Trafyle</code>, Windows'ta
+<code>%APPDATA%\Trafyle</code>) saklanır.</p>
+
+<h2>Trafyle'ın internete çıktığı durumlar</h2>
+<table>
+  <tr><th>Ne zaman</th><th>Nereye</th><th>Ne gönderilir</th></tr>
+  <tr><td>İlk yazıya dökmede ve konuşmacı ayırmada</td><td>Hugging Face, GitHub</td>
+      <td>Yalnızca model dosyası indirme isteği. Dosyalarınız gönderilmez.</td></tr>
+  <tr><td>Günde en fazla bir kez (kapatılabilir)</td><td>GitHub (api.github.com)</td>
+      <td>Yalnızca “en son sürüm hangisi?” sorusu. Hakkında penceresinden kapatabilirsiniz.</td></tr>
+  <tr><td>Siz bir video bağlantısı verdiğinizde</td><td>Verdiğiniz site (ör. YouTube)</td>
+      <td>Sesi indirmek için o siteye normal bir istek; tarayıcıyla açmak gibi.</td></tr>
+  <tr><td>Siz Özetle'yi kullanıp onay verdiğinizde</td><td>Seçtiğiniz hizmet: Anthropic, OpenAI ya da Google</td>
+      <td>Özetlenecek metin ve sizin API anahtarınız. Aşağıya bakın.</td></tr>
+</table>
+
+<h2>Özetleme (isteğe bağlı)</h2>
+<p>Özetle özelliği, sizin kendi API anahtarınızla, seçtiğiniz yapay zekâ hizmetini kullanır. Metin her seferinde
+onayınız alınarak (ya da sizin “bir daha sorma” tercihinizle) yalnızca o hizmete gönderilir; Trafyle'ın geliştiricisi
+bu metni görmez. Gönderilen metin o hizmetin gizlilik ve veri koşullarına tabidir:
+<a href="https://www.anthropic.com/legal/privacy">Anthropic</a>,
+<a href="https://openai.com/policies/privacy-policy">OpenAI</a>,
+<a href="https://policies.google.com/privacy">Google</a>. Google'ın ücretsiz Gemini katmanında gönderilen metinler
+Google'ın ürünlerini geliştirmek için kullanılabilir. Kişisel ya da gizli bilgi içeren metinleri göndermeden önce
+dikkatli olun.</p>
+<p>API anahtarınız dosyaya yazılmaz; Mac'te Anahtar Zinciri'nde, Windows'ta Kimlik Bilgileri Yöneticisi'nde saklanır
+ve Yapay zekâ ayarlarından silinebilir.</p>
+
+<h2>Kişisel Verilerin Korunması Kanunu (KVKK)</h2>
+<p>Trafyle'ın geliştiricisi kullanıcılarla ilgili kişisel veri işlemediği için veri sorumlusu sıfatıyla bir işleme
+faaliyeti bulunmamaktadır. Trafyle ile kendi bilgisayarınızda işlediğiniz kayıtlar ve belgeler (örneğin bir görüşme
+kaydı) üzerindeki sorumluluk, o verileri işleyen kişi ya da kuruma aittir. Özetleme gibi bir hizmete veri
+gönderdiğinizde, bu aktarımın hukuka uygunluğundan siz sorumlusunuz.</p>
+
+<h2>İletişim</h2>
+<p>Sorularınızı <a href="https://github.com/aargunk/trafyle/issues">GitHub üzerinden</a> iletebilirsiniz.</p>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Argun Karacabey · Trafyle, GPL-3.0</span>
+    <span><a href="gizlilik.html">Gizlilik</a> · <a href="kosullar.html">Kullanım koşulları</a> · <a href="https://github.com/aargunk/trafyle">Kaynak kodu</a></span>
+  </div>
+</footer>
+</body>
+</html>

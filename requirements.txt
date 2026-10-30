@@ -1,0 +1,33 @@
+faster-whisper==1.2.1
+av>=11,<16
+numpy
+python-docx>=1.1
+fpdf2>=2.7
+sounddevice>=0.4.6
+tkinterdnd2>=0.4
+sherpa-onnx>=1.12
+certifi
+pdfminer.six>=20231228
+pyobjc-framework-Vision>=10; sys_platform == "darwin"
+pyobjc-framework-Quartz>=10; sys_platform == "darwin"
+yt-dlp>=2026.8
+yt-dlp-ejs
+requests
+websockets
+brotli
+pycryptodomex
+deno>=2.4
+Pillow>=10; sys_platform == "win32"
+pillow-heif>=0.16; sys_platform == "win32"
+pypdfium2>=4.30; sys_platform == "win32"
+winrt-runtime>=3.0; sys_platform == "win32"
+winrt-Windows.Foundation>=3.0; sys_platform == "win32"
+winrt-Windows.Foundation.Collections>=3.0; sys_platform == "win32"
+winrt-Windows.Globalization>=3.0; sys_platform == "win32"
+winrt-Windows.Graphics.Imaging>=3.0; sys_platform == "win32"
+winrt-Windows.Media.Ocr>=3.0; sys_platform == "win32"
+winrt-Windows.Media.SpeechSynthesis>=3.0; sys_platform == "win32"
+winrt-Windows.Storage>=3.0; sys_platform == "win32"
+winrt-Windows.Storage.Streams>=3.0; sys_platform == "win32"
+keyring>=24
+pywin32-ctypes>=0.2; sys_platform == "win32"
