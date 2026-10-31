@@ -19,8 +19,10 @@ Konuşmacı ayırma
   sherpa-onnx ........... Apache-2.0     https://github.com/k2-fsa/sherpa-onnx
   ONNX Runtime .......... MIT            https://github.com/microsoft/onnxruntime
   pyannote segmentation-3.0 modeli ..... MIT        https://huggingface.co/pyannote/segmentation-3.0
-  NVIDIA NeMo TitaNet-Small modeli ..... CC BY 4.0  https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/titanet_small
-    (Atıf: NVIDIA Corporation. Model değiştirilmeden ONNX biçiminde kullanılır.)
+  NVIDIA NeMo TitaNet-Small modeli ..... Apache-2.0 (NeMo Toolkit lisansı)
+    https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/titanet_small
+    (Atıf: NVIDIA Corporation. sherpa-onnx projesinin ONNX'e çevirdiği hâliyle, değiştirilmeden kullanılır.
+     Model dosyaları Trafyle ile dağıtılmaz; ilk kullanımda indirilir.)
 
 Ses ve video
   PyAV .................. BSD-3-Clause   https://github.com/PyAV-Org/PyAV
@@ -67,8 +69,16 @@ Arayüz
 Bağlantıdan ses alma özelliğini yalnızca kullanma hakkınız olan içerikler için kullanın.
 İndirdiğiniz içeriğin telif hakkı ve sitenin kullanım koşulları sizin sorumluluğunuzdadır.
 
-Yalnızca kaynak koddan yapılan kişisel kurulumda
-  Piper sesleri Fahrettin ve Fettah (espeak-ng, GPL-3.0 ile çalışır): Türkçe veri seti CC0, ancak İngilizce
-  "lessac" sesinden türetilerek eğitilmiştir; lessac verisinin lisansı yalnızca araştırma amaçlı kullanıma izin verir,
-  dağıtıma izin vermez. Bu yüzden sesler Trafyle ile dağıtılmaz ve hazır kurulum dosyalarında görünmez;
-  kaynak koddan kurulumda ilk kullanımda kullanıcı tarafından indirilir.
+GPL lisanslı bileşenlerin kaynak kodu
+  Hazır kurulum dosyaları (Trafyle-Kurulum.exe, Trafyle-mac.zip) aşağıdaki GPL lisanslı bileşenleri
+  değiştirilmeden içerir. Kaynak kodları:
+  - FFmpeg 7.1 (GPL-3.0 seçeneğiyle derlenmiş; PyAV 15 ile birlikte gelir)
+      FFmpeg: https://ffmpeg.org/releases/
+      Derleme betikleri ve kullanılan sürümler: https://github.com/PyAV-Org/pyav-ffmpeg
+  - x264 (GPL-2.0+) ........ https://code.videolan.org/videolan/x264
+  - x265 (GPL-2.0+) ........ https://bitbucket.org/multicoreware/x265_git
+  - espeak-ng (GPL-3.0+, sherpa-onnx içinde; Trafyle tarafından kullanılmaz)
+      https://github.com/csukuangfj/espeak-ng/archive/ed530aa113046142eb5115cf2fc9157854d0ffe1.zip
+  - Trafyle'ın kendi kaynak kodu: https://github.com/aargunk/trafyle
+  Bu bileşenlerin kaynak kodunu bu bağlantılardan edinemezseniz, https://github.com/aargunk/trafyle/issues
+  üzerinden isteyin; sürümün yayımlanmasından sonra en az üç yıl boyunca sağlanır.

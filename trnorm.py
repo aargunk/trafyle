@@ -1,6 +1,6 @@
 """Türkçe metni seslendirmeye hazırlar: sayıları, tarihleri, kısaltmaları ve sembolleri okunduğu gibi yazar.
 
-Tüm sesler (Mac/Windows sistem sesleri, Piper, bulut sesleri) aynı hazırlanmış metni okur; telaffuz
+Tüm sesler (Mac ve Windows'un Türkçe sesleri) aynı hazırlanmış metni okur; telaffuz
 hatalarının çoğu bu adımda giderilir. Kullanıcının telaffuz sözlüğü en önce uygulanır.
 """
 from __future__ import annotations

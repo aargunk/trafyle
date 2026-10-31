@@ -2,7 +2,6 @@
 
 - Bilgisayarın kendi Türkçe sistem sesleri: Mac'te "say" komutuyla (ör. Yelda), Windows'ta Windows
   konuşma motoruyla (ör. Tolga). İndirme gerekmez.
-- Piper sesleri (sherpa-onnx) uygulamaya gömülmez; ilk kullanımda indirilir (her biri ~65 MB).
 - Konuşmacılı metinlerde ("Ad: metin" satırları) her konuşmacıya ayrı ses verilebilir.
 """
 from __future__ import annotations
@@ -12,7 +11,6 @@ import re
 import shutil
 import subprocess
 import sys
-import tarfile
 import tempfile
 import threading
 import wave
@@ -22,31 +20,8 @@ import numpy as np
 
 import engine
 
-_BASE = "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models"
-
-# Piper sesleri: (anahtar, görünen ad)
-# Lisans notu: iki ses de CC0 Türkçe veriyle ama İngilizce "lessac" sesinden türetilerek eğitilmiş;
-# lessac verisinin lisansı ticari kullanıma kapalı. Bu yüzden yalnızca kişisel (kaynak koddan) kurulumda
-# gösterilir; hazır kurulum dosyalarında (PyInstaller) ve TTS'siz derlenmiş sherpa-onnx ile görünmez.
-PIPER_VOICES = [
-    ("fahrettin", "Fahrettin · erkek (kişisel)"),
-    ("fettah", "Fettah · erkek (kişisel)"),
-]
-
-
-def piper_available() -> bool:
-    if getattr(sys, "frozen", False) or os.environ.get("TRAFYLE_RELEASE_BUILD"):
-        return False
-    try:
-        import sherpa_onnx
-        return hasattr(sherpa_onnx, "OfflineTts")
-    except Exception:  # noqa: BLE001
-        return False
-
-
-VOICES = PIPER_VOICES if piper_available() else []
-VOICE_LABELS = dict(PIPER_VOICES)
-VOICE_SIZE_MB = 65
+# Yalnızca işletim sisteminin kendi Türkçe sesleri kullanılır. (Önceki sürümlerdeki Piper sesleri, türetildikleri
+# İngilizce sesin lisansı dağıtıma ve araştırma dışı kullanıma izin vermediği için kaldırıldı.)
 OUT_SR = 22050          # tüm sesler bu örnekleme hızına getirilir
 SYS = "sys:"            # sistem sesi anahtarlarının öneki
 KNOWN_FEMALE = {"Yelda"}
@@ -92,7 +67,7 @@ def system_voices() -> list[tuple[str, str]]:
 
 
 def all_voices() -> list[tuple[str, str]]:
-    return system_voices() + VOICES
+    return system_voices()
 
 
 def distinct_voices(voices: list[tuple[str, str]]) -> list[tuple[str, str]]:
@@ -118,72 +93,8 @@ def voice_label(key: str, voices: Optional[list[tuple[str, str]]] = None) -> str
     return key
 
 
-def _voice_url(key: str) -> str:
-    return f"{_BASE}/vits-piper-tr_TR-{key}-medium.tar.bz2"
-
-
-def ses_dir() -> str:
-    return os.path.join(engine.app_dir(), "models", "ses")
-
-
-def voice_dir(key: str) -> str:
-    return os.path.join(ses_dir(), key)
-
-
-def espeak_dir() -> str:
-    return os.path.join(ses_dir(), "espeak-ng-data")
-
-
 def voice_ready(key: str) -> bool:
-    if is_system(key):
-        return True
-    d = voice_dir(key)
-    return (os.path.isfile(os.path.join(d, "model.onnx")) and os.path.isfile(os.path.join(d, "tokens.txt"))
-            and os.path.isdir(espeak_dir()))
-
-
-def download_voice(key: str, on_status: Callable[[str], None], cancel: threading.Event) -> None:
-    os.makedirs(voice_dir(key), exist_ok=True)
-    arc = os.path.join(ses_dir(), f"{key}.tar.bz2")
-    label = VOICE_LABELS.get(key, key)
-    try:
-        engine._download(_voice_url(key), arc, lambda g, t: on_status(
-            f"{label} indiriliyor (bir kerelik) %{int(100 * g / t) if t else 0}"), cancel)
-        on_status(f"{label} hazırlanıyor…")
-        need_espeak = not os.path.isdir(espeak_dir())
-        tmp_espeak = espeak_dir() + ".part"
-        with tarfile.open(arc, "r:bz2") as tf:
-            for m in tf.getmembers():
-                if not m.isfile():
-                    continue
-                parts = m.name.split("/", 1)
-                rel = parts[1] if len(parts) > 1 else parts[0]
-                if rel.endswith(".onnx"):
-                    dest = os.path.join(voice_dir(key), "model.onnx")
-                elif rel == "tokens.txt":
-                    dest = os.path.join(voice_dir(key), "tokens.txt")
-                elif rel.startswith("espeak-ng-data/") and need_espeak:
-                    sub = rel[len("espeak-ng-data/"):]
-                    if ".." in sub.split("/"):
-                        continue
-                    dest = os.path.join(tmp_espeak, sub)
-                else:
-                    continue
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-                with tf.extractfile(m) as src, open(dest, "wb") as dst:
-                    shutil.copyfileobj(src, dst)
-        if need_espeak:
-            os.replace(tmp_espeak, espeak_dir())
-    except engine.Cancelled:
-        raise
-    except Exception as e:  # noqa: BLE001
-        raise RuntimeError(f"Ses indirilemedi ({label}). İnternet bağlantınızı kontrol edip tekrar deneyin.\n"
-                           f"Ayrıntı: {e}") from e
-    finally:
-        if os.path.exists(arc):
-            os.remove(arc)
-    if not voice_ready(key):
-        raise RuntimeError(f"Ses indirmesi tamamlanmadı ({label}). Tekrar deneyin.")
+    return is_system(key)
 
 
 # ---------------------------------------------------------------- metin hazırlığı
@@ -267,32 +178,13 @@ def script(text: str, default_voice: str, speaker_voices: dict[str, str],
 # ---------------------------------------------------------------- seslendirme
 
 class Synth:
-    def __init__(self):
-        self._voices: dict[str, object] = {}
-
-    def _get(self, key: str):
-        if key in self._voices:
-            return self._voices[key]
-        import sherpa_onnx as so
-
-        d = voice_dir(key)
-        cfg = so.OfflineTtsConfig(model=so.OfflineTtsModelConfig(
-            vits=so.OfflineTtsVitsModelConfig(model=os.path.join(d, "model.onnx"),
-                                              tokens=os.path.join(d, "tokens.txt"), data_dir=espeak_dir()),
-            num_threads=max(1, (os.cpu_count() or 4) // 2)))
-        if not cfg.validate():
-            raise RuntimeError("Ses modeli yüklenemedi. Model dosyalarını silip tekrar indirmeyi deneyin.")
-        self._voices[key] = so.OfflineTts(cfg)
-        return self._voices[key]
-
     def synthesize(self, parts: list[tuple[str, str, float]], speed: float,
                    on_status: Callable[[str], None], on_progress: Callable[[float], None],
                    cancel: threading.Event) -> tuple[np.ndarray, int]:
         if not parts:
             raise RuntimeError("Seslendirilecek metin yok.")
-        for key in dict.fromkeys(v for v, _, _ in parts):
-            if not voice_ready(key):
-                download_voice(key, on_status, cancel)
+        if any(not is_system(v) for v, _, _ in parts):
+            raise RuntimeError("Seçili ses bu bilgisayarda bulunamadı. Ses listesinden bir Türkçe ses seçin.")
         on_status("Seslendiriliyor…")
         # Sistem seslerinde art arda gelen aynı sesli cümleler tek seferde okunur (daha doğal ve hızlı)
         merged: list[list] = []
@@ -309,11 +201,7 @@ class Synth:
         for voice, sent, pause in merged:
             if cancel.is_set():
                 raise engine.Cancelled()
-            if is_system(voice):
-                x = self._say(voice[len(SYS):], sent, speed)
-            else:
-                a = self._get(voice).generate(sent, sid=0, speed=speed)
-                x = _resample(np.asarray(a.samples, dtype=np.float32), a.sample_rate, OUT_SR)
+            x = self._say(voice[len(SYS):], sent, speed)
             chunks.append(x)
             chunks.append(np.zeros(int(OUT_SR * pause), dtype=np.float32))
             done += len(sent)

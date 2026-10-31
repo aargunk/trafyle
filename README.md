@@ -60,9 +60,6 @@ Python 3.12 gerekir ([python.org](https://www.python.org/downloads/)). Intel Mac
   python app.py
   ```
 
-Kaynaktan kurulumda ek olarak Piper sesleri (Fahrettin, Fettah) de kullanılabilir; lisansları dağıtıma izin
-vermediği için hazır kurulum dosyalarında yer almazlar (bkz. `assets/LISANSLAR.txt`).
-
 ## Yeni sürüm yayınlama
 
 1. `app.py` içindeki `APP_VERSION`'ı artırın ve `CHANGELOG.md`'ye not ekleyin.

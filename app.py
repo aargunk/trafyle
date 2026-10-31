@@ -35,7 +35,7 @@ import updater
 from engine import Segment
 
 APP_NAME = "Trafyle"
-APP_VERSION = "3.4.0"
+APP_VERSION = "3.4.1"
 IS_MAC = sys.platform == "darwin"
 IS_WINDOWS = os.name == "nt"
 INSTALLER = "Kur.bat" if IS_WINDOWS else "Kur.command"
@@ -2538,12 +2538,8 @@ class TtsPanel:
             self.note.configure(text="Bu bilgisayarda Türkçe ses yüklü değil; “Türkçe ses ekle…” adımlarını izleyin.",
                                 fg="#9A5B00")
             self.go_btn.configure(state="disabled")
-        elif tts.is_system(key):
-            self.note.configure(text=f"{OS_OWN} kendi sesi · indirme gerekmez, bilgisayarınızda çalışır", fg=GREEN)
-        elif tts.voice_ready(key):
-            self.note.configure(text="Ses indirildi · bilgisayarınızda çalışır", fg=GREEN)
         else:
-            self.note.configure(text=f"Bu ses ilk kullanımda indirilir (~{tts.VOICE_SIZE_MB} MB, bir kerelik)", fg="#9A5B00")
+            self.note.configure(text=f"{OS_OWN} kendi sesi · indirme gerekmez, bilgisayarınızda çalışır", fg=GREEN)
         # Mac'te Türkçe sistem sesi yoksa nasıl ekleneceğini göster
         no_system = (IS_MAC or IS_WINDOWS) and not any(tts.is_system(k) for k, _ in self.voices)
         if no_system and not self.howto_btn.winfo_ismapped():

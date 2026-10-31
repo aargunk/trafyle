@@ -1,5 +1,13 @@
 # Sürüm notları
 
+## 3.4.1 — Lisans temizliği
+
+- Piper sesleri (Fahrettin, Fettah) tamamen kaldırıldı: türetildikleri İngilizce sesin lisansı yalnızca araştırma
+  amaçlı kullanıma izin veriyor. Seslendirme artık yalnızca Mac'in ve Windows'un kendi Türkçe seslerini kullanır.
+- Piper sesleriyle üretilmiş örnek ses dosyası (ornek-diyalog.m4a) depodan kaldırıldı.
+- Lisans listesine GPL lisanslı bileşenlerin (FFmpeg, x264, x265, espeak-ng) kaynak kodu bağlantıları eklendi.
+- Konuşmacı ayırma modeli TitaNet'in lisansı teyit edildi (Apache-2.0) ve listede düzeltildi.
+
 ## 3.4.0 — Açık kaynak
 
 - Trafyle artık ücretsiz ve açık kaynaklı (GNU GPL-3.0).
