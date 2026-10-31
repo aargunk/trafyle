@@ -1,13 +1,10 @@
-Trafyle'ın ilk açık kaynak sürümü: ses, metin ve dosya dönüştürücü. Her şey bilgisayarınızda çalışır.
+Lisans temizliği sürümü.
 
-**İndir**
-- Windows 10/11: `Trafyle-Kurulum.exe`
-- Mac (Apple Silicon, M1 ve sonrası): `Trafyle-mac.zip`
+- Piper sesleri (Fahrettin, Fettah) kaldırıldı; seslendirme Mac'in ve Windows'un kendi Türkçe seslerini kullanır.
+- GPL lisanslı bileşenlerin kaynak kodu bağlantıları uygulamadaki lisans listesine eklendi.
+- Konuşmacı ayırma modelinin lisans bilgisi düzeltildi.
 
-Uygulama imza sertifikası kullanmadığı için ilk açılışta bir güvenlik uyarısı çıkar:
-- **Windows:** “Windows bilgisayarınızı korudu” → *Ek bilgi* → *Yine de çalıştır*
-- **Mac:** Zip'i açın, Trafyle'ı Uygulamalar'a sürükleyin, açın; uyarı çıkarsa *Sistem Ayarları › Gizlilik ve Güvenlik › Yine de Aç*
+**İndir:** Windows 10/11 için `Trafyle-Kurulum.exe`, Mac (Apple Silicon) için `Trafyle-mac.zip`.
+İlk açılıştaki güvenlik uyarısı için: https://aargunk.github.io/trafyle/#kurulum
 
-**Neler var:** sesten metne ve konuşmacı ayırma · mikrofondan kayıt · metinden sese (telaffuz sözlüğüyle) · OCR, PDF → Word, video/bağlantıdan ses, görüntü dönüştürme · isteğe bağlı özetleme (kendi Claude / ChatGPT / Gemini anahtarınızla) · yeni sürüm bildirimi.
-
-Ayrıntılar: [CHANGELOG.md](https://github.com/aargunk/trafyle/blob/main/CHANGELOG.md) · Lisans: GPL-3.0
+Tüm değişiklikler: [CHANGELOG.md](https://github.com/aargunk/trafyle/blob/main/CHANGELOG.md)
